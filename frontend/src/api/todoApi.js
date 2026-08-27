@@ -91,7 +91,8 @@ async function withFallback(real, localValue) {
     return data;
   } catch {
     setMode('demo');
-    return localValue;
+    // localValue may be a plain value or a thunk - call it when callable.
+    return typeof localValue === 'function' ? localValue() : localValue;
   }
 }
 

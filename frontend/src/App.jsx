@@ -19,7 +19,8 @@ export default function App() {
       setError('');
       const res = await todoApi.getAll();
       setMode(currentMode());
-      setTodos(res.data);
+      // Never let a bad payload blow up rendering - always an array.
+      setTodos(Array.isArray(res && res.data) ? res.data : []);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -73,13 +74,16 @@ export default function App() {
     }
   };
 
-  const filteredTodos = todos.filter((todo) => {
+  // Guard against a non-array (e.g. if an API ever returns a bad payload).
+  const list = Array.isArray(todos) ? todos : [];
+
+  const filteredTodos = list.filter((todo) => {
     if (filter === 'active') return !todo.completed;
     if (filter === 'completed') return todo.completed;
     return true;
   });
 
-  const remaining = todos.filter((t) => !t.completed).length;
+  const remaining = list.filter((t) => !t.completed).length;
 
   return (
     <div className="app">
