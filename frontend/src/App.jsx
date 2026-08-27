@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { todoApi } from './api/todoApi';
+import { todoApi, currentMode } from './api/todoApi';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 
@@ -10,13 +10,15 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [filter, setFilter] = useState('all');
+  const [mode, setMode] = useState('live');
 
-  // Load all todos from the backend.
+  // Load all todos from the backend (or from localStorage on static hosts).
   const fetchTodos = useCallback(async () => {
     try {
       setLoading(true);
       setError('');
       const res = await todoApi.getAll();
+      setMode(currentMode());
       setTodos(res.data);
     } catch (err) {
       setError(err.message);
@@ -91,6 +93,13 @@ export default function App() {
 
         {error && (
           <div className="banner banner-error">⚠️ {error}</div>
+        )}
+
+        {mode === 'demo' && !error && (
+          <div className="banner banner-demo">
+            🧪 Demo mode — no backend connected, so your todos are saved in
+            this browser only (localStorage).
+          </div>
         )}
 
         <div className="toolbar">
