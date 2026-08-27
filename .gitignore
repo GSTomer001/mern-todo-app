@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Environment / secrets
+.env
+*.env
+
+# Logs
+*.log
+
+# Build output
+dist/
+
+# Stray test/scratch dir
+.mms/
+
+# Temp / scratch files from local tooling
+_marker.txt
+marker.txt
+policy.log
+policy2.log
+tree_check.ps1
+winget.log
+_tree.txt
+_backend.*.log
+_frontend.*.log
+_gitcheck.js
+_git.out
+_diag.*
+_e2e.*
