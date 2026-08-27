@@ -34,6 +34,7 @@ _testrun.log
 
 # Git worktree used for GitHub Pages deploys
 .gh-pages-tmp/
+.gh-deploy/
 
 # Throwaway test/validation output files
 backend/scripts/*.out
