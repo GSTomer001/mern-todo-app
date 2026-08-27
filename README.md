@@ -122,6 +122,28 @@ Example request body for `POST` / `PUT`:
 }
 ```
 
+## Deploy to Vercel
+
+This repo is Vercel-ready: the React app builds to `frontend/dist` and the
+Express API runs as Vercel serverless functions (`api/`), reusing the exact
+same controllers/models as the local backend.
+
+1. **Database** – Vercel can't reach your local MongoDB, so create a free
+   [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cluster and copy its
+   connection string (cluster → *Connect* → *Drivers*, replace `<password>`).
+2. **Project** – Import the repo `GSTomer001/mern-todo-app` on Vercel
+   (Framework Preset: **Other**, Build Command: `cd frontend && npm install && npm run build`,
+   Output Directory: `frontend/dist` — these are already in `vercel.json`).
+3. **Environment variable** – Add `MONGO_URI` = your Atlas connection string
+   (Production + Preview). In Atlas allow the IP `0.0.0.0/0` (Network Access).
+4. **Deploy** – Vercel builds and serves:
+   - `https://<project>.vercel.app` → the React app
+   - `/api/todos`, `/api/todos/:id`, `/api/health` → serverless API functions
+
+> If the site shows the **login page** instead of the app, your project has
+> *Deployment Protection* enabled — turn off *Vercel Authentication* under
+> Settings → Deployment Protection.
+
 ## Production Build
 
 ```bash

@@ -28,3 +28,9 @@ _gitcheck.js
 _git.out
 _diag.*
 _e2e.*
+_test-vercel-api.*
+_vercel-api-test.*
+_testrun.log
+
+# Throwaway test/validation output files
+backend/scripts/*.out

@@ -24,4 +24,10 @@ const connectDB = async () => {
   }
 };
 
+// Serverless deployments (e.g. Vercel) share this module with the model/controllers,
+// so exposing the mongoose instance guarantees everyone checks/uses the SAME connection.
+connectDB.getMongoose = () => mongoose;
+connectDB.isConnected = () => mongoose.connection.readyState === 1;
+connectDB.disconnect = () => mongoose.disconnect();
+
 module.exports = connectDB;
