@@ -144,6 +144,40 @@ same controllers/models as the local backend.
 > *Deployment Protection* enabled — turn off *Vercel Authentication* under
 > Settings → Deployment Protection.
 
+## Live demo on GitHub Pages
+
+The app is deployed at **https://gstomer001.github.io/mern-todo-app/**.
+
+GitHub Pages can only serve static files, so there is no backend/API there.
+When the `/api` request fails, the frontend automatically switches to a
+**demo mode** that stores todos in the browser's localStorage (a small
+"Demo mode" banner appears). This keeps the live demo fully usable.
+
+To re-deploy after changes:
+
+```powershell
+cd frontend
+$env:GH_PAGES = 'true'
+npm run build        # builds with base /mern-todo-app/
+cd ..
+# copy frontend/dist/* into an orphan 'gh-pages' branch and push:
+git branch -D gh-pages 2>$null
+git checkout --orphan gh-pages
+# ... add the dist files, commit, then:
+git push origin gh-pages --force
+git checkout master
+```
+
+## Other free deployment options
+
+| Option | What it runs | Where the API/DB goes |
+|---|---|---|
+| **Netlify** | Frontend + serverless functions (`netlify.toml`) | Functions call your Atlas DB |
+| **Render** | Full Node/Express web service (free tier) | Same repo via Blueprint; add env vars |
+
+Both need a **GitHub login** (one-time browser authorize) and an **Atlas
+MONGO_URI** — the same steps as the Vercel section above.
+
 ## Production Build
 
 ```bash
